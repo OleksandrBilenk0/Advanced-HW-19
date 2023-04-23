@@ -1,0 +1,58 @@
+import React from "react";
+import { Route, Routes as ReactRouterRouts } from "react-router-dom";
+
+import Nav from "../components/navigation/Nav";
+import HomePage from "../pages/home/Home.page";
+import PublicPage from "../pages/public/Public.page";
+import GalleryPage from "../pages/gallery/Gallery.page";
+import ContactPage from "../pages/contact/Contact.page";
+import NoFound from "../pages/no-found/NoFound";
+import UserSingle from "../pages/user-single/UserSingle";
+
+export const appRouts = {
+  home: {
+    id: 1,
+    path: "/spa-navigation/",
+    element: <HomePage />,
+  },
+  publicPage: {
+    id: 2,
+    path: "/spa-navigation/public",
+    element: <PublicPage />,
+  },
+  gallery: {
+    id: 3,
+    path: "/spa-navigation/gallery",
+    element: <GalleryPage />,
+  },
+  contact: {
+    id: 4,
+    path: "/spa-navigation/contact",
+    element: <ContactPage />,
+  },
+};
+
+const Routs = () => {
+  return (
+    <div>
+      <Nav />
+      <ReactRouterRouts>
+        {Object.values(appRouts).map(({ id, path, element }) => (
+          <Route key={id} path={path} element={element} />
+        ))}
+        {
+          <Route exact path="/spa-navigation/contact">
+            <Route
+              exact
+              path="/spa-navigation/contact/:contactName"
+              element={<UserSingle />}
+            ></Route>
+          </Route>
+        }
+        <Route path="*" element={<NoFound />} />
+      </ReactRouterRouts>
+    </div>
+  );
+};
+
+export default Routs;
